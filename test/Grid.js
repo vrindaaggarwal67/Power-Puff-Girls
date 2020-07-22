@@ -93,6 +93,21 @@ describe('Grid', function() {
                 grid.isWalkableAt(x, y).should.be.true;
             })
         });
+        
+        it('should be able to set nodes\' midpoint attribute', function() {
+            enumPos(function(x, y) {
+                grid.setMidAt(x, y, false); 
+            });
+            enumPos(function(x, y) {
+                grid.isMidAt(x, y).should.be.false;
+            })
+            enumPos(function(x, y) {
+                grid.setMidAt(x, y, true); 
+            });
+            enumPos(function(x, y) {
+                grid.isMidAt(x, y).should.be.true;
+            })
+        });
 
         it('should return correct answer for position validity query', function() {
             var asserts = [

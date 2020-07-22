@@ -35,6 +35,8 @@ function benchmark(opt) {
       opt.startY,
       opt.endX,
       opt.endY,
+      opt.midX,
+      opt.midY,
       opt.grid
     );
   });
@@ -70,6 +72,8 @@ testCases.forEach(function(test) {
       startY: scen.startY,
       endX: scen.endX,
       endY: scen.endY,
+      midX: scen.midX,
+      midY: scen.midY,
       footer: '(optimal: '.grey + (''+scen.length).green + ')'.grey
     });
   });

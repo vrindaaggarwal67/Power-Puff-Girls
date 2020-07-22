@@ -124,6 +124,17 @@ Grid.prototype.setWalkableAt = function(x, y, walkable) {
 
 
 /**
+ * Set whether the node on the given position is walkable.
+ * NOTE: throws exception if the coordinate is not inside the grid.
+ * @param {number} x - The x coordinate of the node.
+ * @param {number} y - The y coordinate of the node.
+ * @param {boolean} midpoint - Whether the position is mid point.
+ */
+Grid.prototype.setMidAt = function(x, y, midpoint) {
+    this.nodes[y][x].midpoint = midpoint;
+};
+
+/**
  * Get the neighbors of the given node.
  *
  *     offsets      diagonalOffsets:

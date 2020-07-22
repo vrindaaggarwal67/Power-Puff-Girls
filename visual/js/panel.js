@@ -15,9 +15,10 @@ var Panel = {
             $('#instructions_panel').slideUp();
         });
         $('#play_panel').css({
-            top: $algo.offset().top + $algo.outerHeight() +10
+            top: $algo.offset().top + $algo.outerHeight() +20
         });
         $('#button2').attr('disabled', 'disabled');
+
     },
     /**
      * Get the user selected path-finder.

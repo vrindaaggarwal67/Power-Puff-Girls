@@ -1,5 +1,6 @@
 body {
     background-image: url('./mars2.0.jpg');
+    background-size: cover;
     padding: 0px;
     margin: 0px;
     overflow: hidden;
@@ -28,6 +29,7 @@ h1,h2, h3, h4, h5, h6 {
     text-align: center;
     color: yellow;
     font-family: "Dank Mono", ui-monospace, monospace;
+    letter-spacing: 1px;
 }
 
 .heading{
@@ -80,6 +82,7 @@ h1,h2, h3, h4, h5, h6 {
     bottom: 10px;
     border-radius: 50%;
     border: 2px solid black;
+    letter-spacing: 1px;
     
 }
 
