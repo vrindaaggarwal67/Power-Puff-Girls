@@ -52,11 +52,11 @@ var Controller = StateMachine.create({
             from: ['ready', 'modified', 'restarting'],
             to:   'starting'
         },
-        // {
-        //     name: 'midpoint',
-        //     from: ['finished', 'restarting', 'ready'],
-        //     to: 'searching'
-        // },
+        {
+            name: 'stopover',
+            from: ['finished', 'ready', 'modified', 'restarting'],
+            to: 'searching'
+        },
         {
             name: 'restart',
             from: ['searching', 'finished'],
@@ -73,6 +73,11 @@ var Controller = StateMachine.create({
             to:   'draggingEnd'
         },
         {
+            name: 'dragStop',
+            from: ['ready', 'finished'],
+            to: 'draggingStop'
+        },
+        {
             name: 'drawWall',
             from: ['ready', 'finished'],
             to:   'drawingWall'
@@ -83,18 +88,8 @@ var Controller = StateMachine.create({
             to:   'erasingWall'
         },
         {
-            name: 'drawMid',
-            from: ['ready', 'finished'],
-            to:   'drawingMid'
-        },
-        {
-            name: 'eraseMid',
-            from: ['ready', 'finished'],
-            to:   'erasingMid'
-        },
-        {
             name: 'rest',
-            from: ['draggingStart', 'draggingEnd', 'drawingWall', 'erasingWall'],
+            from: ['draggingStart', 'draggingEnd','draggingStop', 'drawingWall', 'erasingWall'],
             to  : 'ready'
         },
     ],
@@ -124,7 +119,6 @@ $.extend(Controller, {
         });
 
         this.$buttons = $('.control_button');
-        this.$buttons = $('.toggle_button');
 
         this.hookPathFinding();
 
@@ -133,15 +127,11 @@ $.extend(Controller, {
     },
     ondrawWall: function(event, from, to, gridX, gridY) {
         this.setWalkableAt(gridX, gridY, false);
-        // drawingWall
+        // => drawingWall
     },
     oneraseWall: function(event, from, to, gridX, gridY) {
         this.setWalkableAt(gridX, gridY, true);
-        // erasingWall
-    },
-    onmidPoint: function(event, from, to, gridX, gridY) {
-        this.setMidAt(gridX, gridY, true);
-        // drawing mid points
+        // => erasingWall
     },
     onsearch: function(event, from, to) {
         var grid,
@@ -151,9 +141,12 @@ $.extend(Controller, {
         timeStart = window.performance ? performance.now() : Date.now();
         grid = this.grid.clone();
         this.path = finder.findPath(
-            this.startX, this.startY, this.endX, this.endY, grid
+            this.startX, this.startY, this.stopX, this.stopY, grid
         );
-        this.operationCount = this.operations.length; //add the algorithm for mid search
+        this.path = finder.findPath(
+            this.stopX, this.stopY, this.endX, this.endY, grid
+        );
+        this.operationCount = this.operations.length;
         timeEnd = window.performance ? performance.now() : Date.now();
         this.timeSpent = (timeEnd - timeStart).toFixed(4);
 
@@ -231,12 +224,8 @@ $.extend(Controller, {
             text: 'Clear Walls',
             enabled: true,
             callback: $.proxy(this.reset, this),
-        }, {
-            id: 'toggle',
-            enabled:true,
-            callback: $.proxy(this.setMidAt, this),
         });
-        // => [starting, draggingStart, draggingEnd, drawingStart, drawingEnd, drawingMid]
+        // => [starting, draggingStart, draggingEnd,draggingStop, drawingStart, drawingEnd]
     },
     onstarting: function(event, from, to) {
         console.log('=> starting');
@@ -396,7 +385,6 @@ $.extend(Controller, {
     clearAll: function() {
         this.clearFootprints();
         View.clearBlockedNodes();
-        View.clearMidNodes();
     },
     buildNewGrid: function() {
         this.grid = new PF.Grid(this.gridSize[0], this.gridSize[1]);
@@ -407,12 +395,16 @@ $.extend(Controller, {
             gridY = coord[1],
             grid  = this.grid;
 
-        if (this.can('dragStart') && this.isStartPos(gridX, gridY)) {
+        if (this.can('dragStart') && this.isStartPos(gridX, gridY-5)) {
             this.dragStart();
             return;
         }
-        if (this.can('dragEnd') && this.isEndPos(gridX, gridY)) {
+        if (this.can('dragEnd') && this.isEndPos(gridX, gridY-5)) {
             this.dragEnd();
+            return;
+        }
+        if (this.can('dragStop') && this.isStopPos(gridX, gridY-5)) {
+            this.dragStop();
             return;
         }
         if (this.can('drawWall') && grid.isWalkableAt(gridX, gridY-5)) {
@@ -421,12 +413,6 @@ $.extend(Controller, {
         }
         if (this.can('eraseWall') && !grid.isWalkableAt(gridX, gridY-5)) {
             this.eraseWall(gridX, gridY-5);
-        }
-        if (this.can('drawMid') && grid.isWalkableAt(gridX, gridY-5)){
-            this.drawMid(gridX, gridY-5);
-        }
-        if(this.can('eraseMid') && !grid.isWalkableAt(gridX, gridY-5)){
-            this.eraseMid(gridX, gridY -5);
         }
     },
     mousemove: function(event) {
@@ -450,15 +436,17 @@ $.extend(Controller, {
                 this.setEndPos(gridX, gridY);
             }
             break;
+        case 'draggingStop':
+            if(grid.isWalkableAt(gridX, gridY)) {
+                this.setStopPos(gridX, gridY);
+            }    
+            break;
         case 'drawingWall':
             this.setWalkableAt(gridX, gridY, false);
             break;
         case 'erasingWall':
             this.setWalkableAt(gridX, gridY, true);
             break;
-        case 'drawingMid':
-            this.setMidAt(gridX, gridY, true);
-            break;    
         }
     },
     mouseup: function(event) {
@@ -509,29 +497,26 @@ $.extend(Controller, {
 
         this.setStartPos(centerX - 10, centerY-5);
         this.setEndPos(centerX, centerY-5);
+        this.setStopPos(centerX-10, centerY-10);
     },
     setStartPos: function(gridX, gridY) {
         this.startX = gridX;
         this.startY = gridY;
         View.setStartPos(gridX, gridY);
     },
+    setStopPos: function(gridX, gridY) {
+        this.stopX = gridX;
+        this.stopY = gridY;
+        View.setStopPos(gridX, gridY);
+    },
     setEndPos: function(gridX, gridY) {
         this.endX = gridX;
         this.endY = gridY;
         View.setEndPos(gridX, gridY);
     },
-    setMidPos: function(gridX, gridY){
-        this.midX = gridX;
-        this.midY = gridY;
-        View.setMidPos(gridX, gridY);
-    },
     setWalkableAt: function(gridX, gridY, walkable) {
         this.grid.setWalkableAt(gridX, gridY, walkable);
         View.setAttributeAt(gridX, gridY, 'walkable', walkable);
-    },
-    setMidAt: function(gridX, gridY, midpoint) {
-        this.grid.setMidAt(gridX, gridY, midpoint);
-        View.setAttributeAt(gridX, gridY, 'midpoint', midpoint);
     },
     isStartPos: function(gridX, gridY) {
         return gridX === this.startX && gridY === this.startY;
@@ -539,8 +524,8 @@ $.extend(Controller, {
     isEndPos: function(gridX, gridY) {
         return gridX === this.endX && gridY === this.endY;
     },
-    isMidPos: function(gridX, gridY) {
-        return gridX === this.midX && gridY === this.midY;
+    isStopPos: function(gridX, gridY) {
+        return gridX === this.stopX && gridY === this.stopY;
     },
     isStartOrEndPos: function(gridX, gridY) {
         return this.isStartPos(gridX, gridY) || this.isEndPos(gridX, gridY);

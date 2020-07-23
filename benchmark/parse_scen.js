@@ -41,8 +41,8 @@ function parseLine(line) {
     startY: parseInt(fields[5]),
     endX: parseInt(fields[6]),
     endY: parseInt(fields[7]),
-    midX: parseInt(fields[9]),
-    midY: parseInt(fields[10]),
+    stopX: parseInt(fields[9]),
+    stopY: parseInt(fields[10]),
     length: parseFloat(fields[8])
   };
 }

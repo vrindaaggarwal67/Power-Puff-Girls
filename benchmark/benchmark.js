@@ -27,6 +27,8 @@ function profile(callback) {
  * @param {number} opt.startY
  * @param {number} opt.endX
  * @param {number} opt.endY
+ * @param {number} opt.stopX
+ * @param {number} opt.stopY
  */
 function benchmark(opt) {
   var result = profile(function() {
@@ -35,8 +37,8 @@ function benchmark(opt) {
       opt.startY,
       opt.endX,
       opt.endY,
-      opt.midX,
-      opt.midY,
+      opt.stopX,
+      opt.stopY,
       opt.grid
     );
   });
@@ -72,8 +74,8 @@ testCases.forEach(function(test) {
       startY: scen.startY,
       endX: scen.endX,
       endY: scen.endY,
-      midX: scen.midX,
-      midY: scen.midY,
+      stopX: scen.stopX,
+      stopY: scen.stopY,
       footer: '(optimal: '.grey + (''+scen.length).green + ')'.grey
     });
   });

@@ -1,4 +1,4 @@
-const { set } = require("shelljs");
+//const { set } = require("shelljs");
 var View = {
     nodeSize: 30, // width and height of a node
     nodeStyle: {
@@ -14,7 +14,7 @@ var View = {
             fill: 'green', //green
             'stroke-opacity': 0.2,
         },
-        midpoint:{
+        stop:{
             fill: 'yellow', //yellow
             'stroke-opacity': 0.2,
         },
@@ -130,6 +130,20 @@ var View = {
             this.startNode.attr({ x: coord[0], y: coord[1] }).toFront();
         }
     },
+    setStopPos: function(gridX, gridY) {  //stopover function
+        var coord = this.toPageCoordinate(gridX, gridY);
+        if (!this.stopNode) {
+            this.stopNode = this.paper.rect(
+                coord[0],
+                coord[1],
+                this.nodeSize,
+                this.nodeSize
+            ).attr(this.nodeStyle.normal)
+             .animate(this.nodeStyle.stop, 1000);
+        } else {
+            this.stopNode.attr({ x: coord[0], y: coord[1] }).toFront();
+        }
+    },
     setEndPos: function(gridX, gridY) {
         var coord = this.toPageCoordinate(gridX, gridY);
         if (!this.endNode) {
@@ -145,18 +159,14 @@ var View = {
         }
     },
     /* Set the attribute of the node at the given coordinate. */
-    
+
     setAttributeAt: function(gridX, gridY, attr, value) {
         var color, nodeStyle = this.nodeStyle;
         switch (attr) {
         case 'walkable':
             color = value ? nodeStyle.normal.fill : nodeStyle.blocked.fill;
-            this.setWalkableAt(gridX, gridY-4, value);
-            break;
-        case 'midPoint':
-            color = value ? nodeStyle.midpoint.fill : nodeStyle.normal.fill;
-            this.setMidAt(gridX, gridY, value);
-            break;    
+            this.setWalkableAt(gridX, gridY, value);
+            break;   
         case 'opened':
             this.colorizeNode(this.rects[gridY][gridX], nodeStyle.opened.fill);
             this.setCoordDirty(gridX, gridY, true);
@@ -221,35 +231,6 @@ var View = {
             this.zoomNode(node);
         }
     },
-    setMidAt:function(gridX, gridY, value){
-        var node, i, MidNodes = this.MidNodes;
-        if (!MidNodes) {
-            MidNodes = this.MidNodes = new Array(this.numRows);
-            for (i = 0; i < this.numRows; ++i) {
-                MidNodes[i] = [];
-            }
-        }
-        node = MidNodes[gridY][gridX];
-        if (value) {
-            // clear mid node
-            if (node) {
-                this.colorizeNode(node, this.rects[gridY][gridX].attr('fill'));
-                this.zoomNode(node);
-                setTimeout(function() {
-                    node.remove();
-                }, this.nodeZoomEffect.duration);
-                MidModes[gridY][gridX] = null;
-            }
-        } else {
-            // draw mid node
-            if (node) {
-                return;
-            }
-            node = MidNodes[gridY][gridX] = this.rects[gridY][gridX].clone();
-            this.colorizeNode(node, this.nodeStyle.midpoint.fill);
-            this.zoomNode(node);
-        }
-    },
     clearFootprints: function() {
         var i, x, y, coord, coords = this.getDirtyCoords();
         for (i = 0; i < coords.length; ++i) {
@@ -270,20 +251,6 @@ var View = {
                 if (blockedNodes[i][j]) {
                     blockedNodes[i][j].remove();
                     blockedNodes[i][j] = null;
-                }
-            }
-        }
-    },
-    clearMidNodes: function() {
-        var i, j, MidNodes = this.MidNodes;
-        if (!MidNodes) {
-            return;
-        }
-        for (i = 0; i < this.numRows; ++i) {
-            for (j = 0 ;j < this.numCols; ++j) {
-                if (MidNodes[i][j]) {
-                    MidNodes[i][j].remove();
-                    MidNodes[i][j] = null;
                 }
             }
         }
@@ -356,7 +323,6 @@ var View = {
                 }
             }
         }
-        
         this.coordDirty[gridY][gridX] = isDirty;
     },
     getDirtyCoords: function() {

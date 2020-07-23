@@ -1,26 +1,26 @@
-PathFinding.js
-==============
-#### A comprehensive path-finding library in javascript. ####
+# Power-Puff-Girls
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/qiao/PathFinding.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+-------
 
-[![Build Status](https://travis-ci.org/qiao/PathFinding.js.svg?branch=master)](https://travis-ci.org/qiao/PathFinding.js)
-[![Dependency Status](https://david-dm.org/qiao/pathfinding.js.png)](https://david-dm.org/qiao/pathfinding.js)
-[![Documentation Status](https://readthedocs.org/projects/pathfindingjs/badge/)](https://readthedocs.org/projects/pathfindingjs/?badge=latest)
+Naviagtion of Mars Rover
+Help the curious Rovers to find the shortest path to a destination without bombarding with the obstables on the way.
 
-Introduction
-------------
+## Getting Started
 
-The aim of this project is to provide a path-finding library that can be easily incorporated into web games. It may run on Node.js or the browser.
+-------
 
-It comes along with an [online demo](http://qiao.github.com/PathFinding.js/visual) to show how the algorithms execute. (The pathfinding speed is slowed down in the demo)
+-The aim of the project is to provide a path-finding library that can run on node.js or even on a normal browser.
 
-Note that this project only provides path-finding algorithms for 2D space. If you need to work in a 3D environment, then you may use [@schteppe](https://github.com/schteppe)'s [fork](https://github.com/schteppe/PathFinding3D.js).
+-These instructions will get you a copy of an [online demo](https://github.com/vrindaaggarwal67/Power-Puff-Girls) to show how the algorithms execute.
 
-There is new documentation being written for PathFinding.js. You can read it [here](http://pathfindingjs.readthedocs.org/en/latest/). Note that this is in very early stages and far from complete so keep your eyes open for mistakes and don't hesitate to open a pull request in case you find one.
+-Its a path-finding algorithm for 2D space only.
 
-Server
-------
+### Prerequisites 
+
+npm manager
+
+
+### Installation
 
 If you want to use it in Node.js, you may install it via `npm`.
 
@@ -37,7 +37,38 @@ var PF = require('pathfinding');
 See the `Basic Usage` section below for usage details.
 
 
-Browser
+## Browser
+
+-------
+
+If you have bower installed then you can install it with the following command:
+
+```bash
+bower install pathfinding
+```
+
+By default bower will install pathfinding under the bower_components folder, so to include it in your page do something like:
+
+```html
+<script type="text/javascript" src="path/to/bower_components/pathfinding/pathfinding-browser.min.js"></script>
+
+```
+If you want to use it in Node.js, you may install it via `npm`.
+
+```bash
+npm install pathfinding
+```
+
+Then, in your program:
+
+```javascript
+var PF = require('pathfinding');
+```
+
+See the `Basic Usage` section below for usage details.
+
+
+## Browser
 -------
 
 If you have bower installed then you can install it with the following command:
@@ -54,10 +85,10 @@ By default bower will install pathfinding under the bower_components folder, so 
 
 You can also grab a release from the [Releases Page](https://github.com/imor/pathfinding-bower/releases) if you don't use bower.
 
-Basic Usage
------------
+### Basic Usage
+-------
 
-To build a grid-map of width 5 and height 3:
+#### To build a grid-map of width 5 and height 3:
 
 ```javascript
 var grid = new PF.Grid(5, 3); 
@@ -131,8 +162,9 @@ var gridBackup = grid.clone();
 ```
 
 
-Advanced Usage
---------------
+## Advanced Usage
+
+--------
 
 When instantiating path-finders, you may pass in additional parameters to indicate which specific strategies to use.
 
@@ -206,8 +238,8 @@ var newPath = PF.Util.expandPath(path);
 ```
 
 
-Development
-------------
+## Development
+-------
 
 Layout:
 
@@ -218,47 +250,14 @@ Layout:
     |-- utils        # build scripts
 	|-- benchmark    # benchmarks
     `-- visual       # visualization
-
 Make sure you have `node.js` installed, then use `npm` to install the dependencies: 
-
     npm install -d 
-
 The build system uses gulp, so make sure you have it installed:
-
     npm install -d -g gulp
-
 To build the browser distribution:
-
     gulp compile
 
-To run the tests
-(algorithms only, not including the visualization) with
-[mocha](http://mochajs.org/) and [should.js](https://github.com/visionmedia/should.js)
-First install mocha:
+## License
 
-    npm install -d -g mocha
-
-Then run the tests:
-
-    gulp test
-
-To run the benchmarks:
-
-    gulp bench
-
-Or if you are feeling lazy, the default gulp task does everything(except running the benchmarks):
-
-    gulp
-
-License
 -------
-
 [MIT License](http://www.opensource.org/licenses/mit-license.php)
-
-&copy; 2011-2012 Xueqiao Xu &lt;xueqiaoxu@gmail.com&gt;
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
