@@ -1,7 +1,7 @@
 # Power-Puff-Girls
 
 Naviagtion of Mars Rover
-Help the curious Rovers to find the shortest path to a destination without bombarding with the obstables on the way.
+Help the curious Rovers to find the shortest path to a destination while passing through a stop over without bombarding with the obstables on the way. 
 
 ## Getting Started
 
@@ -225,7 +225,8 @@ you may use `PF.Util.expandPath`.
 ```javascript
 var newPath = PF.Util.expandPath(path);
 ```
-
+## Changes to be done
+I have created this as a nevigator with a stop over in between. Need to make a toggle button to enable/disable the stop over.
 
 ## Development
 
