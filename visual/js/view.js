@@ -1,6 +1,6 @@
 //const { set } = require("shelljs");
 var View = {
-    nodeSize: 30, // width and height of a node
+    nodeSize: 21, // width and height of a node
     nodeStyle: {
         normal: {
             fill: '#ffffff00',
