@@ -1,13 +1,9 @@
 # Power-Puff-Girls
 
--------
-
 Naviagtion of Mars Rover
 Help the curious Rovers to find the shortest path to a destination without bombarding with the obstables on the way.
 
 ## Getting Started
-
--------
 
 -The aim of the project is to provide a path-finding library that can run on node.js or even on a normal browser.
 
@@ -39,8 +35,6 @@ See the `Basic Usage` section below for usage details.
 
 ## Browser
 
--------
-
 If you have bower installed then you can install it with the following command:
 
 ```bash
@@ -69,7 +63,6 @@ See the `Basic Usage` section below for usage details.
 
 
 ## Browser
--------
 
 If you have bower installed then you can install it with the following command:
 
@@ -85,8 +78,6 @@ By default bower will install pathfinding under the bower_components folder, so 
 
 You can also grab a release from the [Releases Page](https://github.com/imor/pathfinding-bower/releases) if you don't use bower.
 
-### Basic Usage
--------
 
 #### To build a grid-map of width 5 and height 3:
 
@@ -164,8 +155,6 @@ var gridBackup = grid.clone();
 
 ## Advanced Usage
 
---------
-
 When instantiating path-finders, you may pass in additional parameters to indicate which specific strategies to use.
 
 For all path-finders, you may indicate whether diagonal movement is allowed. The default value is `false`, which means that the path can only go orthogonally.
@@ -239,7 +228,6 @@ var newPath = PF.Util.expandPath(path);
 
 
 ## Development
--------
 
 Layout:
 
@@ -259,5 +247,4 @@ To build the browser distribution:
 
 ## License
 
--------
 [MIT License](http://www.opensource.org/licenses/mit-license.php)
