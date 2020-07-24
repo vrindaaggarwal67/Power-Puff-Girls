@@ -18,6 +18,7 @@ var Panel = {
             top: $algo.offset().top + $algo.outerHeight() +10
         });
         $('#button2').attr('disabled', 'disabled');
+     //   $('#Stop_over').attr('')
 
     },
     /**

@@ -428,24 +428,26 @@ $.extend(Controller, {
         switch (this.current) {
         case 'draggingStart':
             if (grid.isWalkableAt(gridX, gridY)) { // no change in start once the process starts.
-                this.setStartPos(gridX, gridY);
+                this.setStartPos(gridX, gridY-5);
             }
             break;
         case 'draggingEnd':
             if (grid.isWalkableAt(gridX, gridY)) {
-                this.setEndPos(gridX, gridY);
+                this.setEndPos(gridX, gridY-5);
             }
             break;
         case 'draggingStop':
             if(grid.isWalkableAt(gridX, gridY)) {
-                this.setStopPos(gridX, gridY);
+                this.setStopPos(gridX, gridY-5);
             }    
             break;
         case 'drawingWall':
-            this.setWalkableAt(gridX, gridY, false);
+            if(!grid.isStartOrEndPos(gridX, gridY)) { 
+               this.setWalkableAt(gridX, gridY-5, false);
+            }
             break;
         case 'erasingWall':
-            this.setWalkableAt(gridX, gridY, true);
+            this.setWalkableAt(gridX, gridY-5, true);
             break;
         }
     },
@@ -498,6 +500,8 @@ $.extend(Controller, {
         this.setStartPos(centerX - 10, centerY-5);
         this.setEndPos(centerX, centerY-5);
         this.setStopPos(centerX-10, centerY-10);
+        // if(document.getElementById("Stop_over").checked){
+        // this.setStopPos(centerX-10, centerY-15);}
     },
     setStartPos: function(gridX, gridY) {
         this.startX = gridX;
