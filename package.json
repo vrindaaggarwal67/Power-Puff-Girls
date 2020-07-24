@@ -2,7 +2,7 @@
   "name": "pathfinding",
   "version": "0.4.18",
   "description": "Comprehensive pathfinding library for grid based games",
-  "homepage": "https://github.com/qiao/PathFinding.js",
+  "homepage": "https://github.com/vrindaaggarwal67/Power-Puff-Girls.git",
   "keywords": [
     "pathfinding",
     "astar",
@@ -13,7 +13,7 @@
     "depthfirst",
     "breadthfirst"
   ],
-  "author": "Xueqiao Xu <xueqiaoxu@gmail.com>",
+  "author": "Vrinda Aggarwal<vrindaaggarwal67@gmail.com>, Richa Verma <richaverma8474@gmail.com>",
   "main": "./index.js",
   "dependencies": {
     "bower": "^1.8.8",
@@ -42,7 +42,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/qiao/PathFinding.js.git"
+    "url": "https://github.com/vrindaaggarwal67/Power-Puff-Girls.git"
   },
   "licenses": [
     {

@@ -81,12 +81,12 @@ If you want to use the latest development version you will have to install
 PathFinding.js manually.
 
 ### For Server
-[Download](https://github.com/qiao/PathFinding.js/archive/master.zip) the zip
+[Download](https://vrindaaggarwal67.github.io/Power-Puff-Girls/) the zip
 from github and extract the contents into the node_modules folder. Don't forget
 to rename the extracted folder from PathFinding.js-master to pathfinding.
 
 ### For Client
-[Download](https://github.com/qiao/PathFinding.js/archive/master.zip) the zip
+[Download](https://vrindaaggarwal67.github.io/Power-Puff-Girls/) the zip
 from github, extract it in a temporary folder and navigate to this folder:
 
 ```bash

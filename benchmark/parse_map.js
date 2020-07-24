@@ -1,33 +1,3 @@
-#!/usr/bin/env node
-
-/**
- * Convert the `map` files into json
- * 
- * All maps begin with the lines:
- * 
- *     type octile
- *     height x
- *     width y
- *     map
- * 
- * where x and y are the repsective height and width of the map.
- * 
- * The map data is store as an ASCII grid. The following characters are possible:
- * 
- *     . - passable terrain
- *     G - passable terrain
- *     @ - out of bounds
- *     O - out of bounds
- *     T - trees (unpassable)
- *     S - swamp (passable from regular terrain)
- *     W - water (traversable, but not passable from terrain)
- * 
- */
-
-/**
- * Implementation note:
- * For convenience, only '.' and 'G' are interpreted as walkable.
- */
 
 var fs = require('fs');
 var endOfLine = require('os').EOL;

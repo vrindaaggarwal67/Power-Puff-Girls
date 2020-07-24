@@ -37,8 +37,6 @@ function AStarFinder(opt) {
         }
     }
 
-    // When diagonal movement is allowed the manhattan heuristic is not
-    //admissible. It should be octile instead
     if (this.diagonalMovement === DiagonalMovement.Never) {
         this.heuristic = opt.heuristic || Heuristic.manhattan;
     } else {
@@ -110,9 +108,6 @@ AStarFinder.prototype.findPath = function(startX, startY, endX, endY, grid) {
                     openList.push(neighbor);
                     neighbor.opened = true;
                 } else {
-                    // the neighbor can be reached with smaller cost.
-                    // Since its f value has been updated, we have to
-                    // update its position in the open list
                     openList.updateItem(neighbor);
                 }
             }

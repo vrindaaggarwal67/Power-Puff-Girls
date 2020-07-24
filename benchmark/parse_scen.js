@@ -1,22 +1,3 @@
-#!/usr/bin/env node
-
-/**
- * The scenario files have the following format.
- * The begin with the text "version x.x". This document describes version 1.0. 
- * The trailing 0 is optional.
- *
- * Each line of a scenario has 9 fields:
- *
- * Bucket
- * map 
- * map width
- * map height 
- * start x-coordinate
- * start y-coordinate
- * goal x-coordinate
- * goal y-coordinate
- * optimal length
- */
 
 var fs = require('fs');
 

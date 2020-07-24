@@ -47,9 +47,6 @@ exports.pathLength = pathLength;
 
 
 /**
- * Given the start and end coordinates, return all the coordinates lying
- * on the line formed by these coordinates, based on Bresenham's algorithm.
- * http://en.wikipedia.org/wiki/Bresenham's_line_algorithm#Simplification
  * @param {number} x0 Start x coordinate
  * @param {number} y0 Start y coordinate
  * @param {number} x1 End x coordinate
@@ -93,8 +90,6 @@ exports.interpolate = interpolate;
 
 
 /**
- * Given a compressed path, return a new path that has all the segments
- * in it interpolated.
  * @param {Array<Array<number>>} path The path
  * @return {Array<Array<number>>} expanded path
  */
@@ -128,8 +123,6 @@ exports.expandPath = expandPath;
 
 
 /**
- * Smoothen the give path.
- * The original path will not be modified; a new path will be returned.
  * @param {PF.Grid} grid
  * @param {Array<Array<number>>} path The path
  */
@@ -178,8 +171,6 @@ exports.smoothenPath = smoothenPath;
 
 
 /**
- * Compress a path, remove redundant nodes without altering the shape
- * The original path is not modified
  * @param {Array<Array<number>>} path The path
  * @return {Array<Array<number>>} The compressed path
  */

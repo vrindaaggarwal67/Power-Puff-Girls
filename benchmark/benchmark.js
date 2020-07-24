@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 var colors    = require('colors');
 var PF        = require('..');
 var parseMap  = require('./parse_map').parse;
